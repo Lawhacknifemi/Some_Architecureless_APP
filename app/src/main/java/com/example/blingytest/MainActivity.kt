@@ -27,14 +27,15 @@ private lateinit var firebasefireStore :FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
-     var isVisible: Boolean? = true
+
 
 //   lateinit var detalTVLayout :ConstraintLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-    isVisible = true
+    var isVisible = false
+
 
 //        detalTVLayout = findViewById(R.id.detailsTvLayout)
 
@@ -72,11 +73,18 @@ class MainActivity : AppCompatActivity() {
                 val detailsView = holder.detailTVLayout
 
                 holder.itemView.setOnClickListener {
-                    detailsView.visibility = View.VISIBLE
-                    Toast.makeText(this@MainActivity,"You Clicked ${holder.position}",
-                    Toast.LENGTH_LONG).show()
+                    if (!isVisible){
+                        detailsView.visibility = View.VISIBLE
+                        isVisible = true
+                    }else{
+                        detailsView.setOnClickListener {
+                            detailsView.visibility = View.GONE
+                            isVisible = false
+                        }
+                        detailsView.visibility = View.GONE
+                        isVisible = false
 
-
+                    }
 
 
                 }
