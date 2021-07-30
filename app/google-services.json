@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "71284794658",
+    "project_id": "blingy-cab5f",
+    "storage_bucket": "blingy-cab5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71284794658:android:adcb27dd3aa051f982f17b",
+        "android_client_info": {
+          "package_name": "com.example.blingytest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71284794658-l4goi97d43lvq2rud87vu4e1bovjhen4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJmVC_ymSLyY22TlcGjFaJXuHLfQ7qxow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71284794658-l4goi97d43lvq2rud87vu4e1bovjhen4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "71284794658-s3hkpdhlhv4mm1010icbpqmc8et3tpv7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.blingytest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
