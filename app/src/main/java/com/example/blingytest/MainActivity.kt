@@ -1,26 +1,27 @@
 package com.example.blingytest
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Visibility
 import com.example.blingytest.data.People
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.firebase.ui.firestore.paging.LoadingState
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import android.widget.PopupWindow
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
+
 
 private lateinit var firebasefireStore :FirebaseFirestore
 
@@ -37,7 +38,20 @@ class MainActivity : AppCompatActivity() {
     var isVisible = false
 
 
-//        detalTVLayout = findViewById(R.id.detailsTvLayout)
+    val getDialogFragment = CustomisedDialogFragment()
+
+    val inflater:LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+    // Inflate a custom view using layout inflater
+    val view = inflater.inflate(R.layout.profile_image_layout,null)
+
+    // Initialize a new instance of popup window
+    val popupWindow = PopupWindow(
+        view, // Custom view to show in popup window
+        LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
+        LinearLayout.LayoutParams.WRAP_CONTENT // Window height
+    )
+
 
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
@@ -72,6 +86,43 @@ class MainActivity : AppCompatActivity() {
                 holder.location.text = model.Location
                 val detailsView = holder.detailTVLayout
 
+                val profileImage = holder.profileImg
+
+                profileImage.setOnClickListener {
+
+                    // Initialize a new layout inflater instance
+
+                    // Set an elevation for the popup window
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        popupWindow.elevation = 10.0F
+                    }
+
+
+                    // If API level 23 or higher then execute the code
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        // Create a new slide animation for popup window enter transition
+                        val slideIn = Slide()
+                        slideIn.slideEdge = Gravity.TOP
+
+
+                        // Slide animation for popup window exit transition
+                        val slideOut = Slide()
+                        slideOut.slideEdge = Gravity.RIGHT
+                    }
+
+                    TransitionManager.beginDelayedTransition(findViewById(R.id.fire_store_list_rv))
+                    popupWindow.showAtLocation(
+                        findViewById(R.id.fire_store_list_rv), // Location to display popup window
+                        Gravity.CENTER, // Exact position of layout to display popup
+                        0, // X offset
+                        0 // Y offset
+                    )
+
+                }
+                popupWindow.isOutsideTouchable = true
+                    popupWindow.dismiss()
+
+
                 holder.itemView.setOnClickListener {
                     if (!isVisible){
                         detailsView.visibility = View.VISIBLE
@@ -88,7 +139,6 @@ class MainActivity : AppCompatActivity() {
 
 
                 }
-
             }
 
             override fun onLoadingStateChanged(state: LoadingState) {
